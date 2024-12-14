@@ -7,6 +7,7 @@ export const themeColors = {
     orange: {},
     black: {
       primary: '#333333',
+      secondary: '#666666',
     },
     grey: {
       primary: '#515151',

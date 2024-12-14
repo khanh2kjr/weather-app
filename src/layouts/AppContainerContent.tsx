@@ -1,35 +1,28 @@
 import { Box, Theme } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import TemperatureForecast from './TemperatureForecast/TemperatureForecast'
 import AirPollutionForecast from './AirPollutionForecast'
-import TemperatureForecast from './TemperatureForecast'
 
 const AppContainerContent = () => {
   const classes = useStyles()
 
   return (
     <Box className={classes.RootAppContainerContent}>
-      <Box className={classes.tempForcast}>
-        <TemperatureForecast />
-      </Box>
-      <Box className={classes.airPollutionForcast}>
-        <AirPollutionForecast />
-      </Box>
+      <TemperatureForecast />
+      <AirPollutionForecast />
     </Box>
   )
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
   RootAppContainerContent: {
-    flexGrow: 1,
-    display: 'flex',
-    gap: theme.spacing(3),
     padding: theme.spacing(3),
-  },
-  tempForcast: {
-    width: 400,
-  },
-  airPollutionForcast: {
-    width: 600,
+    maxWidth: 1488,
+    margin: '0 auto',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: theme.spacing(3),
   },
 }))
 
