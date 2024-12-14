@@ -7,7 +7,7 @@ const EightDaysForecast = () => {
   const classes = useStyles()
 
   return (
-    <PaperBox className={classes.RootEightDaysForecast} title="8 Days Forecast">
+    <PaperBox title="8 Days Forecast">
       <Box className={classes.dayForecastList}>
         <Box className={classes.forecastItem}>
           <Box>Sat, Dec 14</Box>
@@ -95,9 +95,6 @@ const EightDaysForecast = () => {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  RootEightDaysForecast: {
-    minHeight: 189,
-  },
   dayForecastList: {
     display: 'flex',
     gap: theme.spacing(6),

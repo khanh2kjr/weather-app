@@ -7,7 +7,7 @@ const AirPollutionForecast = () => {
 
   return (
     <Box className={classes.RootAirPollutionForecast}>
-      <PaperBox className={classes.paperBox} title="Air Quality in Hanoi">
+      <PaperBox title="Air Quality in Hanoi">
         <Box className={classes.listOptions}>
           <Box className={classes.option}>
             <Box className={classes.label}>PM2.5</Box>
@@ -69,9 +69,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   label: {
     marginBottom: theme.spacing(1),
     fontSize: 14,
-  },
-  paperBox: {
-    minHeight: 189,
   },
 }))
 

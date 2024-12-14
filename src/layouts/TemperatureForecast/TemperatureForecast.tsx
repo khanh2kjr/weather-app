@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   boxEightDays: {
     width: 'calc(100% - (300px + 24px))',
-    minHeight: 189,
   },
 }))
 

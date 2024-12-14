@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderRadius: theme.spacing(1),
     background: theme.color.black.primary,
     padding: theme.spacing(2),
+    minHeight: 190,
   },
   title: {
     fontSize: 18,
