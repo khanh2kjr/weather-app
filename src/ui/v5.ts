@@ -3,12 +3,14 @@ import { ThemeOptions as ThemeOptionsOld } from '@mui/material/styles/createThem
 
 export const themeColors = {
   color: {
-    blue: {
+    blue: {},
+    orange: {},
+    black: {
       primary: '#333333',
     },
-    orange: {},
-    black: {},
-    grey: {},
+    grey: {
+      primary: '#515151',
+    },
     green: {},
     yellow: {},
     error: {},
@@ -21,7 +23,7 @@ const themeOptions: ThemeOptionsOld = {
   ...themeColors,
   palette: {
     primary: {
-      main: themeColors.color.blue.primary,
+      main: themeColors.color.black.primary,
     },
   },
   typography: {

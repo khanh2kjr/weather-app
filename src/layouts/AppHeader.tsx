@@ -1,8 +1,8 @@
 import { AppBar, Box, Theme, Toolbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import SearchBar from './SearchBar'
+import SearchBar from '../components/SearchBar'
 
-const Header = () => {
+const AppHeader = () => {
   const classes = useStyles()
 
   return (
@@ -24,4 +24,4 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-export default Header
+export default AppHeader
