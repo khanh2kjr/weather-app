@@ -1,7 +1,7 @@
 import { Box, Theme } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import TemperatureForecast from './TemperatureForecast'
 import AirPollutionForecast from './AirPollutionForecast'
+import TemperatureForecast from './TemperatureForecast'
 
 const AppContainerContent = () => {
   const classes = useStyles()
