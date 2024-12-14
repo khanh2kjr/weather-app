@@ -1,5 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search'
 import { alpha, InputBase, styled } from '@mui/material'
+import { ChangeEvent } from 'react'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -40,13 +41,39 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }))
 
-const SearchBar = () => {
+interface SearchBarProps {
+  value: string
+  onChange: (value: string) => void
+  onBlur?: () => void
+  onFocus?: () => void
+}
+
+const SearchBar = ({ value, onChange, onBlur, onFocus }: SearchBarProps) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    onChange(value)
+  }
+
+  const handleFocus = () => {
+    !!onFocus && onFocus()
+  }
+
+  const handleBlur = () => {
+    !!onBlur && onBlur()
+  }
+
   return (
     <Search>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
-      <StyledInputBase placeholder="Search…" />
+      <StyledInputBase
+        value={value}
+        placeholder="Enter keyword..."
+        onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+      />
     </Search>
   )
 }
