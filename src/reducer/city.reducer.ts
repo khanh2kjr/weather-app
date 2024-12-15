@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
-import { CityResponse } from '../types'
+import { CityResponse, Coordinate } from '../types'
 import { searchCityCoordinates } from '../api/apis'
 
 export const searchCities = createAsyncThunk(
@@ -16,14 +16,17 @@ export const searchCities = createAsyncThunk(
 )
 
 export interface CityState {
-  searchCityId: number
+  searchCityCoord: Coordinate
   citiesSearchState: {
     data: CityResponse[]
     loading: boolean
   }
 }
 const initialState: CityState = {
-  searchCityId: 0,
+  searchCityCoord: {
+    lat: 0,
+    lon: 0,
+  },
   citiesSearchState: {
     data: [],
     loading: false,
@@ -34,8 +37,8 @@ export const citySlice = createSlice({
   name: 'cityStore',
   initialState,
   reducers: {
-    setSearchCityId(state, { payload }) {
-      state.searchCityId = payload
+    setSearchCityCoord(state, { payload }) {
+      state.searchCityCoord = payload
     },
   },
   extraReducers: builder => {
@@ -62,6 +65,6 @@ export const citySlice = createSlice({
 
 export const cityReducerSelector = (state: RootState) => state['cityStore']
 
-export const { setSearchCityId } = citySlice.actions
+export const { setSearchCityCoord } = citySlice.actions
 
 export default citySlice.reducer

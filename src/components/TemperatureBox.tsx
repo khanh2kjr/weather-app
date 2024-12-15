@@ -4,8 +4,8 @@ import { getWeatherIconURL } from '../utils'
 import clsx from 'clsx'
 
 interface TemperatureBoxProps {
-  icon: string
-  value: number
+  icon?: string
+  value?: number
   iconWidthSize?: number
   valueSize?: number
   className?: string
@@ -26,7 +26,7 @@ const TemperatureBox = ({
         src={getWeatherIconURL(icon)}
         style={{ width: iconWidthSize || 70 }}
       />
-      <Box sx={{ fontSize: valueSize || 32 }}>{Math.round(value)}°C</Box>
+      <Box sx={{ fontSize: valueSize || 32 }}>{Math.round(value || 0)}°C</Box>
     </Box>
   )
 }

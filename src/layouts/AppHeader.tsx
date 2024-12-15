@@ -12,7 +12,7 @@ import { AppDispatch } from '../store'
 import {
   cityReducerSelector,
   searchCities,
-  setSearchCityId,
+  setSearchCityCoord,
 } from '../reducer/city.reducer'
 
 const AppHeader = () => {
@@ -25,6 +25,7 @@ const AppHeader = () => {
   const [searchValue, setSearchValue] = useState('')
   const [openCities, setOpenCities] = useState(false)
   const [searchFocused, setSearchFocused] = useState(false)
+  const [countSearch, setCountSearch] = useState(0)
 
   useClickOutside(searchBoxRef, () => {
     setOpenCities(false)
@@ -33,19 +34,29 @@ const AppHeader = () => {
   const onClickSearchCities = () => {
     setOpenCities(true)
     dispatch(searchCities({ cityName: searchValue.trim() }))
+    setCountSearch(countSearch + 1)
   }
 
-  const selectCity = (cityId: number) => {
-    dispatch(setSearchCityId(cityId))
+  const selectCity = (city: CityResponse) => {
+    dispatch(setSearchCityCoord(city.coord))
     setOpenCities(false)
     setSearchValue('')
+    setCountSearch(0)
   }
+
+  useEffect(() => {
+    dispatch(searchCities({ cityName: 'hanoi' })).then(res => {
+      // @ts-ignore
+      dispatch(setSearchCityCoord(res.payload?.data?.list[0]?.coord))
+    })
+  }, [])
 
   useEffect(() => {
     const onEscape = (event: { key: string }) => {
       if (event.key === 'Enter' && !!searchValue && searchFocused) {
         setOpenCities(true)
         dispatch(searchCities({ cityName: searchValue.trim() }))
+        setCountSearch(countSearch + 1)
       }
     }
     document.addEventListener('keydown', onEscape)
@@ -73,7 +84,7 @@ const AppHeader = () => {
           >
             Search
           </Button>
-          {citiesSearchState.loading && (
+          {citiesSearchState.loading && countSearch > 0 && (
             <Box className={classes.listCities}>
               <Box className={classes.emptyCities}>Loading...</Box>
             </Box>
@@ -85,16 +96,16 @@ const AppHeader = () => {
                   <Box
                     className={classes.cityItem}
                     key={city.id}
-                    onClick={() => selectCity(city.id)}
+                    onClick={() => selectCity(city)}
                   >
                     <Box className={classes.cityNameBox}>
-                      <Box>{`${city.name}, ${city.sys.country}`}</Box>
-                      <img src={getCountryIconURL(city.sys.country)} />
+                      <Box>{`${city.name}, ${city.sys?.country}`}</Box>
+                      <img src={getCountryIconURL(city.sys?.country)} />
                     </Box>
                     <TemperatureBox
                       className={classes.tempBox}
-                      value={city.main.temp}
-                      icon={city.weather[0].icon}
+                      value={city.main?.temp}
+                      icon={city?.weather?.[0].icon}
                       valueSize={14}
                       iconWidthSize={50}
                     />

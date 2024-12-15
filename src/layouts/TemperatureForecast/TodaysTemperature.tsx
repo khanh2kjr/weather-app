@@ -5,14 +5,26 @@ import PaperBox from '../../components/PaperBox'
 import TemperatureBox from '../../components/TemperatureBox'
 import { formatToReadableDate } from '../../utils'
 
-const TodaysTemperature = () => {
+interface TodaysTemperatureProps {
+  tempValue?: number
+  iconValue?: string
+  cityName?: string
+  countryName?: string
+}
+
+const TodaysTemperature = ({
+  tempValue,
+  iconValue,
+  cityName,
+  countryName,
+}: TodaysTemperatureProps) => {
   const classes = useStyles()
 
   return (
     <PaperBox className={classes.RootTodaysTemperature} title="Currently">
       <Box className={classes.todaysTemperatureChildren}>
         <Box className={classes.temperatureBox}>
-          <TemperatureBox value={25} icon="04n" />
+          <TemperatureBox value={tempValue} icon={iconValue} />
         </Box>
         <Box className={classes.timeBox}>
           <CalendarToday />
@@ -20,7 +32,9 @@ const TodaysTemperature = () => {
         </Box>
         <Box className={classes.cityNameBox}>
           <Place />
-          <Box>Hanoi, VN</Box>
+          <Box>
+            {cityName}, {countryName}
+          </Box>
         </Box>
       </Box>
     </PaperBox>

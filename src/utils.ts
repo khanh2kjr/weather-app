@@ -1,4 +1,4 @@
-export const getWeatherIconURL = (iconCode: string) => {
+export const getWeatherIconURL = (iconCode?: string) => {
   return `https://openweathermap.org/img/wn/${iconCode}@2x.png`
 }
 
@@ -13,6 +13,6 @@ export const formatToReadableDate = (date: Date) => {
   })
 }
 
-export const getCountryIconURL = (code: string) => {
-  return `https://openweathermap.org/images/flags/${code.toLowerCase()}.png`
+export const getCountryIconURL = (code?: string) => {
+  return `https://openweathermap.org/images/flags/${code?.toLowerCase()}.png`
 }

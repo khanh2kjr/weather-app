@@ -1,4 +1,4 @@
-interface Coordinate {
+export interface Coordinate {
   lat: number
   lon: number
 }
@@ -9,10 +9,14 @@ interface Wind {
 }
 
 export interface CityResponse {
-  id: number
-  name: string
-  coord: Coordinate
-  main: {
+  id?: number
+  base?: number
+  cod?: number
+  timezone?: number
+  visibility?: number
+  name?: string
+  coord?: Coordinate
+  main?: {
     temp: number
     feels_like: number
     temp_min: number
@@ -22,17 +26,17 @@ export interface CityResponse {
     sea_level: number
     grnd_level: number
   }
-  dt: number
-  wind: Wind
-  sys: {
+  dt?: number
+  wind?: Wind
+  sys?: {
     country: string
   }
-  rain: number | null
-  snow: number | null
-  clouds: {
+  rain?: number | null
+  snow?: number | null
+  clouds?: {
     all: number
   }
-  weather: {
+  weather?: {
     id: number
     main: string
     description: string

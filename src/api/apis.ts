@@ -1,3 +1,4 @@
+import { Coordinate } from '../types'
 import { httpRequest } from './httpRequest'
 
 export const searchCityCoordinates = async (payload: { cityName: string }) => {
@@ -6,6 +7,17 @@ export const searchCityCoordinates = async (payload: { cityName: string }) => {
       params: {
         q: payload.cityName,
       },
+    })
+    return res
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const getCityCurrentWeather = async (payload: Coordinate) => {
+  try {
+    const res = await httpRequest.get('/weather', {
+      params: payload,
     })
     return res
   } catch (error) {
