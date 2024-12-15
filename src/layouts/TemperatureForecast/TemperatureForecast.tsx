@@ -26,36 +26,50 @@ const TemperatureForecast = () => {
 
   const { searchCityCoord } = useSelector(cityReducerSelector)
 
+  const [loading, setLoading] = useState(false)
   const [currentWeather, setCurrentWeather] = useState<CityResponse>({})
   const [eightDaysForecast, setEightDaysForecast] = useState<
     EightDaysForecastItem[]
   >([])
 
   const getCityTemperature = async (searchCityCoord: Coordinate) => {
-    const res = await getCityCurrentWeather(searchCityCoord)
-    if (res) {
-      setCurrentWeather(res.data)
+    try {
+      const res = await getCityCurrentWeather(searchCityCoord)
+      setCurrentWeather(res?.data)
+      return res
+    } catch (error) {
+      console.error(error)
     }
   }
 
   const getCityForeCast = async (searchCityCoord: Coordinate) => {
-    const res = await getCityCurrentForeCast(searchCityCoord)
-    if (res) {
+    try {
+      const res = await getCityCurrentForeCast(searchCityCoord)
       setEightDaysForecast(
-        res.data.daily.map((item: any, index: number) => ({
+        res?.data.daily.map((item: any) => ({
           date: formatDate(item.dt),
           tempMax: Math.round(item.temp.max),
           tempMin: Math.round(item.temp.min),
           icon: item.weather[0].icon,
         }))
       )
+      return res
+    } catch (error) {
+      console.error(error)
     }
   }
 
   useEffect(() => {
     if (searchCityCoord.lat && searchCityCoord.lon) {
-      getCityTemperature(searchCityCoord)
-      getCityForeCast(searchCityCoord)
+      setLoading(true)
+      Promise.all([
+        getCityTemperature(searchCityCoord),
+        getCityForeCast(searchCityCoord),
+      ]).finally(() => {
+        setTimeout(() => {
+          setLoading(false)
+        }, 200)
+      })
     }
   }, [searchCityCoord])
 
@@ -63,6 +77,7 @@ const TemperatureForecast = () => {
     <Box className={classes.RootTemperatureForecast}>
       <Box className={classes.boxToday}>
         <TodaysTemperature
+          loading={loading}
           tempValue={currentWeather.main?.temp}
           iconValue={currentWeather.weather?.[0]?.icon}
           cityName={currentWeather.name}
@@ -70,7 +85,10 @@ const TemperatureForecast = () => {
         />
       </Box>
       <Box className={classes.boxEightDays}>
-        <EightDaysForecast eightDaysForecast={eightDaysForecast} />
+        <EightDaysForecast
+          eightDaysForecast={eightDaysForecast}
+          loading={loading}
+        />
       </Box>
     </Box>
   )

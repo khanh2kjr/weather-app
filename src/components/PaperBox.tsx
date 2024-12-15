@@ -1,4 +1,4 @@
-import { Box, Theme } from '@mui/material'
+import { Box, CircularProgress, Skeleton, Theme } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import clsx from 'clsx'
 import { ReactElement } from 'react'
@@ -7,15 +7,22 @@ interface PaperBoxProps {
   title?: string
   children: ReactElement | string
   className?: string
+  loading?: boolean
 }
 
-const PaperBox = ({ title, className, children }: PaperBoxProps) => {
+const PaperBox = ({ title, className, children, loading }: PaperBoxProps) => {
   const classes = useStyles()
 
   return (
     <Box className={clsx(classes.RootPaperBox, className && className)}>
       <Box className={classes.title}>{title}</Box>
-      {children}
+      {loading ? (
+        <Box className={classes.loading}>
+          <CircularProgress className={classes.circle} />
+        </Box>
+      ) : (
+        children
+      )}
     </Box>
   )
 }
@@ -32,6 +39,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(2),
     borderBottom: `1px solid ${theme.color.grey.primary}`,
     paddingBottom: theme.spacing(2),
+  },
+  loading: {
+    backgroundColor: `${theme.color.grey.primary} !important`,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 190,
+  },
+  circle: {
+    color: '#fff !important',
   },
 }))
 

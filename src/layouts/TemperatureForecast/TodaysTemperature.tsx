@@ -10,6 +10,7 @@ interface TodaysTemperatureProps {
   iconValue?: string
   cityName?: string
   countryName?: string
+  loading: boolean
 }
 
 const TodaysTemperature = ({
@@ -17,11 +18,16 @@ const TodaysTemperature = ({
   iconValue,
   cityName,
   countryName,
+  loading,
 }: TodaysTemperatureProps) => {
   const classes = useStyles()
 
   return (
-    <PaperBox className={classes.RootTodaysTemperature} title="Currently">
+    <PaperBox
+      className={classes.RootTodaysTemperature}
+      title="Currently"
+      loading={loading}
+    >
       <Box className={classes.todaysTemperatureChildren}>
         <Box className={classes.temperatureBox}>
           <TemperatureBox value={tempValue} icon={iconValue} />
