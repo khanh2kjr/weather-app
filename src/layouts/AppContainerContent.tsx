@@ -18,11 +18,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   RootAppContainerContent: {
     padding: theme.spacing(3),
     maxWidth: 1488,
-    margin: '0 auto',
+    margin: '16px auto 16px auto',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
     gap: theme.spacing(3),
+    backgroundColor: theme.color.grey.primary,
   },
 }))
 

@@ -130,6 +130,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     gap: theme.spacing(2),
     display: 'flex',
     justifyContent: 'space-between',
+    [theme.breakpoints.down(576)]: {
+      flexDirection: 'column',
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+      alignItems: 'baseline',
+    },
   },
   searchBox: {
     display: 'flex',

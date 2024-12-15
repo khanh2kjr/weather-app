@@ -99,12 +99,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
     display: 'flex',
     gap: theme.spacing(3),
+    [theme.breakpoints.down(868)]: {
+      flexDirection: 'column',
+    },
   },
   boxToday: {
     width: 300,
+    [theme.breakpoints.down(868)]: {
+      width: '100%',
+    },
   },
   boxEightDays: {
     width: 'calc(100% - (300px + 24px))',
+    [theme.breakpoints.down(868)]: {
+      width: '100%',
+    },
   },
 }))
 

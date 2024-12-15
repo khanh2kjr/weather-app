@@ -17,9 +17,9 @@ const App = () => {
 const useStyles = makeStyles((theme: Theme) => ({
   RootApp: {
     backgroundColor: theme.color.grey.primary,
-    height: '100vh',
     display: 'flex',
     flexDirection: 'column',
+    height: '100%',
   },
 }))
 
