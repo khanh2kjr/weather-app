@@ -1,19 +1,18 @@
 import { AppBar, Box, Button, Theme, Toolbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { useEffect, useRef, useState } from 'react'
-import { searchCityCoordinates } from '../api/apis'
+import { useDispatch, useSelector } from 'react-redux'
 import SearchBar from '../components/SearchBar'
-import { CityResponse } from '../types'
-import { getCountryIconURL } from '../utils'
 import TemperatureBox from '../components/TemperatureBox'
 import { useClickOutside } from '../hooks'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from '../store'
 import {
   cityReducerSelector,
   searchCities,
   setSearchCityCoord,
 } from '../reducer/city.reducer'
+import { AppDispatch } from '../store'
+import { CityResponse } from '../types'
+import { getCountryIconURL } from '../utils'
 
 const AppHeader = () => {
   const classes = useStyles()

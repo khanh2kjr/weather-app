@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Skeleton, Theme } from '@mui/material'
+import { Box, CircularProgress, Theme } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import clsx from 'clsx'
 import { ReactElement } from 'react'
