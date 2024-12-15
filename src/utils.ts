@@ -12,3 +12,7 @@ export const formatToReadableDate = (date: Date) => {
     hour12: true,
   })
 }
+
+export const getCountryIconURL = (code: string) => {
+  return `https://openweathermap.org/images/flags/${code.toLowerCase()}.png`
+}

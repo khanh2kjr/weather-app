@@ -6,9 +6,13 @@ import { makeStyles } from '@mui/styles'
 const App = () => {
   const classes = useStyles()
 
+  const onSelectCity = (cityId: number) => {
+    console.log(cityId)
+  }
+
   return (
     <Box className={classes.RootApp}>
-      <AppHeader />
+      <AppHeader onSelectCity={onSelectCity} />
       <AppContainerContent />
     </Box>
   )
