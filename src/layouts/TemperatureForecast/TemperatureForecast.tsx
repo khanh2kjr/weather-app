@@ -6,7 +6,20 @@ import { useSelector } from 'react-redux'
 import { cityReducerSelector } from '../../reducer/city.reducer'
 import { useEffect, useState } from 'react'
 import { CityResponse, Coordinate } from '../../types'
-import { getCityCurrentWeather } from '../../api/apis'
+import { getCityCurrentForeCast, getCityCurrentWeather } from '../../api/apis'
+
+const formatDate = (timestamp: number) => {
+  const date = new Date(timestamp * 1000)
+  const options: any = { weekday: 'short', month: 'short', day: 'numeric' }
+  return date.toLocaleDateString('en-US', options)
+}
+
+export interface EightDaysForecastItem {
+  date: string
+  tempMax: number
+  tempMin: number
+  icon: string
+}
 
 const TemperatureForecast = () => {
   const classes = useStyles()
@@ -14,6 +27,9 @@ const TemperatureForecast = () => {
   const { searchCityCoord } = useSelector(cityReducerSelector)
 
   const [currentWeather, setCurrentWeather] = useState<CityResponse>({})
+  const [eightDaysForecast, setEightDaysForecast] = useState<
+    EightDaysForecastItem[]
+  >([])
 
   const getCityTemperature = async (searchCityCoord: Coordinate) => {
     const res = await getCityCurrentWeather(searchCityCoord)
@@ -22,11 +38,24 @@ const TemperatureForecast = () => {
     }
   }
 
-  console.log(currentWeather)
+  const getCityForeCast = async (searchCityCoord: Coordinate) => {
+    const res = await getCityCurrentForeCast(searchCityCoord)
+    if (res) {
+      setEightDaysForecast(
+        res.data.daily.map((item: any, index: number) => ({
+          date: formatDate(item.dt),
+          tempMax: Math.round(item.temp.max),
+          tempMin: Math.round(item.temp.min),
+          icon: item.weather[0].icon,
+        }))
+      )
+    }
+  }
 
   useEffect(() => {
     if (searchCityCoord.lat && searchCityCoord.lon) {
       getCityTemperature(searchCityCoord)
+      getCityForeCast(searchCityCoord)
     }
   }, [searchCityCoord])
 
@@ -41,7 +70,7 @@ const TemperatureForecast = () => {
         />
       </Box>
       <Box className={classes.boxEightDays}>
-        <EightDaysForecast />
+        <EightDaysForecast eightDaysForecast={eightDaysForecast} />
       </Box>
     </Box>
   )

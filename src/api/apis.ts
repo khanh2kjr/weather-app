@@ -24,3 +24,14 @@ export const getCityCurrentWeather = async (payload: Coordinate) => {
     console.error(error)
   }
 }
+
+export const getCityCurrentForeCast = async (payload: Coordinate) => {
+  try {
+    const res = await httpRequest.get('/onecall', {
+      params: payload,
+    })
+    return res
+  } catch (error) {
+    console.error(error)
+  }
+}

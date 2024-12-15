@@ -9,6 +9,8 @@ interface TemperatureBoxProps {
   iconWidthSize?: number
   valueSize?: number
   className?: string
+  maxValue?: number
+  minValue?: number
 }
 
 const TemperatureBox = ({
@@ -17,6 +19,8 @@ const TemperatureBox = ({
   iconWidthSize,
   valueSize,
   className,
+  maxValue,
+  minValue,
 }: TemperatureBoxProps) => {
   const classes = useStyles()
 
@@ -26,7 +30,16 @@ const TemperatureBox = ({
         src={getWeatherIconURL(icon)}
         style={{ width: iconWidthSize || 70 }}
       />
-      <Box sx={{ fontSize: valueSize || 32 }}>{Math.round(value || 0)}°C</Box>
+      <Box sx={{ fontSize: valueSize || 32 }}>
+        {maxValue && minValue ? (
+          <Box component="span">
+            {Math.round(maxValue)} / {Math.round(minValue)}
+          </Box>
+        ) : (
+          <Box component="span">{Math.round(value || 0)}</Box>
+        )}
+        °C
+      </Box>
     </Box>
   )
 }
