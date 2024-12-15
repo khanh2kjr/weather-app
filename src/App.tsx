@@ -1,18 +1,14 @@
 import { Box, Theme } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import AppContainerContent from './layouts/AppContainerContent'
 import AppHeader from './layouts/AppHeader'
-import { makeStyles } from '@mui/styles'
 
 const App = () => {
   const classes = useStyles()
 
-  const onSelectCity = (cityId: number) => {
-    console.log(cityId)
-  }
-
   return (
     <Box className={classes.RootApp}>
-      <AppHeader onSelectCity={onSelectCity} />
+      <AppHeader />
       <AppContainerContent />
     </Box>
   )

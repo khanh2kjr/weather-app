@@ -7,49 +7,45 @@ import { CityResponse } from '../types'
 import { getCountryIconURL } from '../utils'
 import TemperatureBox from '../components/TemperatureBox'
 import { useClickOutside } from '../hooks'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../store'
+import {
+  cityReducerSelector,
+  searchCities,
+  setSearchCityId,
+} from '../reducer/city.reducer'
 
-interface AppHeaderProps {
-  onSelectCity: (cityId: number) => void
-}
-
-const AppHeader = ({ onSelectCity }: AppHeaderProps) => {
+const AppHeader = () => {
   const classes = useStyles()
-
+  const dispatch = useDispatch<AppDispatch>()
   const searchBoxRef = useRef<HTMLDivElement | null>(null)
 
+  const { citiesSearchState } = useSelector(cityReducerSelector)
+
   const [searchValue, setSearchValue] = useState('')
-  const [cities, setCities] = useState<CityResponse[]>([])
   const [openCities, setOpenCities] = useState(false)
   const [searchFocused, setSearchFocused] = useState(false)
-  const [loading, setLoading] = useState(false)
 
   useClickOutside(searchBoxRef, () => {
     setOpenCities(false)
   })
 
-  const searchCities = () => {
+  const onClickSearchCities = () => {
     setOpenCities(true)
-    setLoading(true)
-    searchCityCoordinates({ cityName: searchValue.trim() })
-      .then(res => {
-        setCities(res?.data?.list)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+    dispatch(searchCities({ cityName: searchValue.trim() }))
   }
 
   const selectCity = (cityId: number) => {
-    onSelectCity(cityId)
+    dispatch(setSearchCityId(cityId))
     setOpenCities(false)
-    setCities([])
     setSearchValue('')
   }
 
   useEffect(() => {
     const onEscape = (event: { key: string }) => {
       if (event.key === 'Enter' && !!searchValue && searchFocused) {
-        searchCities()
+        setOpenCities(true)
+        dispatch(searchCities({ cityName: searchValue.trim() }))
       }
     }
     document.addEventListener('keydown', onEscape)
@@ -73,19 +69,19 @@ const AppHeader = ({ onSelectCity }: AppHeaderProps) => {
             variant="contained"
             disabled={!searchValue.trim()}
             className={classes.buttonSearch}
-            onClick={searchCities}
+            onClick={onClickSearchCities}
           >
             Search
           </Button>
-          {loading && (
+          {citiesSearchState.loading && (
             <Box className={classes.listCities}>
               <Box className={classes.emptyCities}>Loading...</Box>
             </Box>
           )}
-          {!loading && openCities && (
+          {!citiesSearchState.loading && openCities && (
             <Box className={classes.listCities}>
-              {cities.length ? (
-                cities.map(city => (
+              {citiesSearchState.data.length ? (
+                citiesSearchState.data.map(city => (
                   <Box
                     className={classes.cityItem}
                     key={city.id}
